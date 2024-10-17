@@ -1,0 +1,27 @@
+emptyTile = 0
+shiptile = 1
+sunkenShip = 2
+ShotOnEmpty = 3
+
+def new_game_board():
+    board = []
+    row = []
+    for _ in range(3):
+        row.append(emptyTile)
+    for _ in range (3):
+        board.append(row)
+    return board
+    
+def is_empty(value):
+    if value == emptyTile:
+        return True
+    return False
+
+def is_ship(value):
+    if value == shiptile:
+        return True
+    return False
+
+def shot_on_tile(grid,x, y):
+    if is_ship(grid[y][x]):
+        gird[y][x] = sunkenShip

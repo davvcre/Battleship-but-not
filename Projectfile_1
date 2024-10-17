@@ -1,0 +1,17 @@
+empty = 0
+player_1 = 1
+player_2 = 2
+
+def new_game():
+    game = []
+    row = []
+    for _ in range(9):
+        row.append(empty)
+    for _ in range(9):
+        game.append(row)
+    return game
+
+board = new_game()
+
+for rows in board:
+    print(rows)
