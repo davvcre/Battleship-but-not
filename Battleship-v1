@@ -5,10 +5,8 @@ ShotOnEmpty = 3
 
 def new_game_board():
     board = []
-    row = []
-    for _ in range(3):
-        row.append(emptyTile)
     for _ in range (3):
+        row = [emptyTile]*3
         board.append(row)
     return board
     
@@ -24,4 +22,10 @@ def is_ship(value):
 
 def shot_on_tile(grid,x, y):
     if is_ship(grid[y][x]):
-        gird[y][x] = sunkenShip
+        grid[y][x] = sunkenShip
+    elif is_empty(grid[y][x]):
+        grid[y][x] = ShotOnEmpty
+
+ts = new_game_board()
+shot_on_tile(ts, 1, 1)
+print(ts)
