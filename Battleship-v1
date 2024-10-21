@@ -1,7 +1,7 @@
 emptyTile = 0
 shiptile = 1
 sunkenShip = 2
-ShotOnEmpty = 3
+shotOnEmpty = 3
 
 def new_game_board():
     return [[emptyTile] * 3 for _ in range(3)]
@@ -20,16 +20,27 @@ def shot_on_tile(grid,x, y):
     if is_ship(grid[y][x]):
         grid[y][x] = sunkenShip
     elif is_empty(grid[y][x]):
-        grid[y][x] = ShotOnEmpty
+        grid[y][x] = shotOnEmpty
 
 def view_game_board(grid):
+    c  = 65
     print()
-    for i in len(grid[0]):
+    print(f"  ", end='')
+    for i in range(len(grid[0])):
         print(f"| {i+1} ", end='')
     print("| ")
-    
+    print((len(grid[0])*4+4)*"-")
+    for j in range(len(grid)):
+        print(f"{chr(c + j)} ", end='')
+        for k in range(len(grid[j])):
+            print(f"| {grid[j][k]} ", end='')
+        print('| ')
+        print((len(grid[0])*4+4)*"-")
+
+
 
 
 ts = new_game_board()
 shot_on_tile(ts, 1, 1)
 print(ts)
+view_game_board(ts)
