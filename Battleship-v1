@@ -1,3 +1,4 @@
+
 emptyTile = 0
 shiptile = 1
 sunkenShip = 2
@@ -16,27 +17,37 @@ def is_ship(value):
         return True
     return False
 
+def is_sunken(value):
+    if value == sunkenShip:
+        return True
+    return False
+
 def shot_on_tile(grid,x, y):
     if is_ship(grid[y][x]):
         grid[y][x] = sunkenShip
     elif is_empty(grid[y][x]):
         grid[y][x] = shotOnEmpty
 
+def grid_to_strings(grid):
+    symbol_map = {emptyTile: " ", shiptile: "B", sunkenShip: "X", shotOnEmpty: "O"}
+    return [[symbol_map.get(cell, "O") for cell in row] for row in grid]
+
+
 def view_game_board(grid):
     c  = 65
+    pGrid = grid_to_strings(grid)
     print()
     print(f"  ", end='')
-    for i in range(len(grid[0])):
+    for i in range(len(pGrid[0])):
         print(f"| {i+1} ", end='')
     print("| ")
-    print((len(grid[0])*4+4)*"-")
-    for j in range(len(grid)):
+    print((len(pGrid[0])*4+4)*"-")
+    for j in range(len(pGrid)):
         print(f"{chr(c + j)} ", end='')
-        for k in range(len(grid[j])):
-            print(f"| {grid[j][k]} ", end='')
+        for k in range(len(pGrid[j])):
+            print(f"| {pGrid[j][k]} ", end='')
         print('| ')
-        print((len(grid[0])*4+4)*"-")
-
+        print((len(pGrid[0])*4+4)*"-")
 
 
 
@@ -44,3 +55,4 @@ ts = new_game_board()
 shot_on_tile(ts, 1, 1)
 print(ts)
 view_game_board(ts)
+print(ts)
