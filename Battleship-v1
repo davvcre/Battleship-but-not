@@ -5,64 +5,89 @@ sunkenShip = 2
 shotOnEmpty = 3
 gridSize = 3
 
-def new_game_board():
+
+def new_game_board():#creates a 2D list of size gridSize
     return [[emptyTile] * gridSize for _ in range(gridSize)]
-    
-def is_empty(value):
+  
+def is_empty(value): #checks if a given value is = emptyTile
     if value == emptyTile:
         return True
     return False
 
-def is_ship(value):
+def is_ship(value): #checks if a given value is = shipTile
     if value == shiptile:
         return True
     return False
 
-def is_sunken(value):
+def is_sunken(value): #checks if a given value is = sunkenShip
     if value == sunkenShip:
         return True
     return False
 
-def shot_on_tile(grid,x, y):
+def shot_on_tile(grid,x, y): 
+    #alters an element in a 2D list with index x and y
+    #depending on what value was there before
     if is_ship(grid[y][x]):
         grid[y][x] = sunkenShip
     elif is_empty(grid[y][x]):
         grid[y][x] = shotOnEmpty
 
-def grid_to_strings(grid):
+def grid_to_strings(grid): #Turns a 2D list with numbers into a 2D list with strings
     symbol_map = {emptyTile: " ", shiptile: "B", sunkenShip: "X", shotOnEmpty: "O"}
     return [[symbol_map.get(cell, "O") for cell in row] for row in grid]
 
-def view_game_board(grid):
-    c  = 65
+def view_game_board(grid): #Shows the player the gameboard
+
+    #Turns the list of numbers into a list of symbols instead
     pGrid = grid_to_strings(grid)
+
+    #Prints an empty row
     print()
+    
+    #Prints the first row showing the numbering of the columns
     print(f"  ", end='')
     for i in range(len(pGrid[0])):
         print(f"| {i+1} ", end='')
     print("| ")
+
+    #prints a line inbetween the first and second row
     print((len(pGrid[0])*4+4)*"-")
+
+    #Prints the rest of the rows with a letter in the first column denoting whiich row it is and with "|" lines seperating the columns 
     for j in range(len(pGrid)):
-        print(f"{chr(c + j)} ", end='')
+        print(f"{chr(ord("A")+ j)} ", end='')
         for k in range(len(pGrid[j])):
             print(f"| {pGrid[j][k]} ", end='')
         print('| ')
         print((len(pGrid[0])*4+4)*"-")
-
+    
+    print()
 def placment_input(grid_size):
     while True:
         user_input = input(f"Enter a grid reference (e.g., A1 to {chr(ord('A') + grid_size - 1)}{grid_size}): ").upper()
-        if len(user_input) != 2:
+        
+        #check that it is a valid lenght 
+        if len(user_input) < 2:
             print(f"Invalid input: {user_input}. Please enter a valid square.")
             continue
-        row, col = user_input[0], user_input[1]
+        
+        #To seperate rows and columns
+        row = user_input[0]
+        col = user_input[1:]
+        
+        #checks that the first character is a letter and that it is
+        #one of the letters that is on the grid
         max_row = chr(ord('A') + grid_size - 1)
         if row < 'A' or row > max_row:
             print(f"Invalid row: {row}. Please enter a row between A and {max_row}.")
             continue
-        if not col.isdigit() or int(col) < 1 or int(col) > grid_size:
+        
+        #checks if second character is a number and that it is
+        #a valid column
+        if not col.isnumeric() or int(col) < 1 or int(col) > grid_size:
             print(f"Invalid column: {col}. Please enter a column between 1 and {grid_size}.")
             continue
+
         return user_input
 
 
