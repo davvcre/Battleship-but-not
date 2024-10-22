@@ -3,9 +3,10 @@ emptyTile = 0
 shiptile = 1
 sunkenShip = 2
 shotOnEmpty = 3
+gridSize = 3
 
 def new_game_board():
-    return [[emptyTile] * 3 for _ in range(3)]
+    return [[emptyTile] * gridSize for _ in range(gridSize)]
     
 def is_empty(value):
     if value == emptyTile:
@@ -32,7 +33,6 @@ def grid_to_strings(grid):
     symbol_map = {emptyTile: " ", shiptile: "B", sunkenShip: "X", shotOnEmpty: "O"}
     return [[symbol_map.get(cell, "O") for cell in row] for row in grid]
 
-
 def view_game_board(grid):
     c  = 65
     pGrid = grid_to_strings(grid)
@@ -49,6 +49,21 @@ def view_game_board(grid):
         print('| ')
         print((len(pGrid[0])*4+4)*"-")
 
+def placment_input(grid_size):
+    while True:
+        user_input = input(f"Enter a grid reference (e.g., A1 to {chr(ord('A') + grid_size - 1)}{grid_size}): ").upper()
+        if len(user_input) != 2:
+            print(f"Invalid input: {user_input}. Please enter a valid square.")
+            continue
+        row, col = user_input[0], user_input[1]
+        max_row = chr(ord('A') + grid_size - 1)
+        if row < 'A' or row > max_row:
+            print(f"Invalid row: {row}. Please enter a row between A and {max_row}.")
+            continue
+        if not col.isdigit() or int(col) < 1 or int(col) > grid_size:
+            print(f"Invalid column: {col}. Please enter a column between 1 and {grid_size}.")
+            continue
+        return user_input
 
 
 ts = new_game_board()
